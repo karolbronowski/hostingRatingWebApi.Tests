@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using hostingRatingWebApi.Commands;
 using hostingRatingWebApi.Database;
 using hostingRatingWebApi.DTO;
 using hostingRatingWebApi.Models;
@@ -129,6 +130,168 @@ namespace hostingRatingWebApi.Tests.Services
                 await service.DeleteAsync(result.Id);
                 var deleted = await service.GetAsync(result.Id);
                 Assert.Null(deleted);
+            }
+        }
+        [Fact]
+        public async Task brand_service_get_async_returns_correctType_brandDTO()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "brand_package_service_get_async_returns_correctType_brandPackageDTO")
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = new DatabaseContext(options))
+            {
+
+                Brand brand = new Brand(Guid.NewGuid(), "netia.pl", "url");
+              
+                IBrandRepository repo = new BrandRepository(context);
+                await repo.CreateAsync(brand);
+
+                //make sure that one entity existing in table brandpackages
+                var existing = await repo.BrowseAsync();
+                var x = existing.ToList().FirstOrDefault();
+                var mock = new Mock<IMapper>();
+
+                var mockMapper = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<User, UserDTO>();
+                    cfg.CreateMap<Brand, BrandDTO>();
+                    cfg.CreateMap<BrandPackage, BrandPackageDTO>();
+                });
+                var mapper = mockMapper.CreateMapper();
+
+                var service = new BrandService(repo, mapper);
+
+                var result = await service.GetAsync(x.Id);
+
+                Assert.IsType<BrandDTO>(result);
+            }
+        }
+        [Fact]
+        public async Task brand_package_service_get_async_includes_brand_packages()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "brand_package_service_get_async_returns_correctType_brandPackageDTO")
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = new DatabaseContext(options))
+            {
+
+                Brand brand = new Brand(Guid.NewGuid(), "netia.pl", "url");
+                BrandPackage brandPackage = new BrandPackage(Guid.NewGuid(), new CreateBrandPackage(brand.Id, "Test", "50", "50", "1", "2", "3", "4", 1, 10));
+
+
+                IBrandRepository repo2 = new BrandRepository(context);
+                await repo2.CreateAsync(brand);
+
+                IBrandPackageRepository repo = new BrandPackageRepository(context);
+                await repo.CreateAsync(brandPackage);
+
+                //make sure that one entity existing in table brandpackages
+                var existing = await repo2.BrowseAsync();
+                var x = existing.ToList().FirstOrDefault();
+                var mock = new Mock<IMapper>();
+
+                var mockMapper = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<User, UserDTO>();
+                    cfg.CreateMap<Brand, BrandDTO>();
+                    cfg.CreateMap<BrandPackage, BrandPackageDTO>();
+                });
+                var mapper = mockMapper.CreateMapper();
+
+                var service = new BrandService(repo2, mapper);
+
+                var result = await service.GetAsync(x.Id);
+
+                //Assert.InRange(result.BrandPackages.Count(),1,1);
+                Assert.Single(result.BrandPackages);
+            }
+        }
+        [Fact]
+        public async Task brand_service_get_async_returns_correct_brand_name()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "brand_service_get_async_returns_correctType_brandPackageDTO")
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = new DatabaseContext(options))
+            {
+
+                Brand brand = new Brand(Guid.NewGuid(), "netia.pl", "url");
+                BrandPackage brandPackage = new BrandPackage(Guid.NewGuid(), new CreateBrandPackage(brand.Id, "Test", "50", "50", "1", "2", "3", "4", 1, 10));
+
+
+                IBrandRepository repo2 = new BrandRepository(context);
+                await repo2.CreateAsync(brand);
+
+                IBrandPackageRepository repo = new BrandPackageRepository(context);
+                await repo.CreateAsync(brandPackage);
+
+                //make sure that one entity existing in table brandpackages
+                var existing = await repo2.BrowseAsync();
+                var x = existing.ToList().FirstOrDefault();
+                var mock = new Mock<IMapper>();
+
+                var mockMapper = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<User, UserDTO>();
+                    cfg.CreateMap<Brand, BrandDTO>();
+                    cfg.CreateMap<BrandPackage, BrandPackageDTO>();
+                });
+                var mapper = mockMapper.CreateMapper();
+
+                var service = new BrandService(repo2, mapper);
+
+                var result = await service.GetAsync(x.Id);
+
+                Assert.Equal("netia.pl",result.Name);
+            }
+        }
+        [Fact]
+        public async Task brand_package_service_browse_async_includes_brand_packages()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseInMemoryDatabase(databaseName: "brand_package_service_get_async_returns_correctType_brandPackageDTO")
+                .Options;
+
+            // Insert seed data into the database using one instance of the context
+            using (var context = new DatabaseContext(options))
+            {
+
+                Brand brand = new Brand(Guid.NewGuid(), "netia.pl", "url");
+                BrandPackage brandPackage = new BrandPackage(Guid.NewGuid(), new CreateBrandPackage(brand.Id, "Test", "50", "50", "1", "2", "3", "4", 1, 10));
+
+
+                IBrandRepository repo2 = new BrandRepository(context);
+                await repo2.CreateAsync(brand);
+
+                IBrandPackageRepository repo = new BrandPackageRepository(context);
+                await repo.CreateAsync(brandPackage);
+
+                //make sure that one entity existing in table brandpackages
+                var existing = await repo2.BrowseAsync();
+                var x = existing.ToList().FirstOrDefault();
+                var mock = new Mock<IMapper>();
+
+                var mockMapper = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<User, UserDTO>();
+                    cfg.CreateMap<Brand, BrandDTO>();
+                    cfg.CreateMap<BrandPackage, BrandPackageDTO>();
+                });
+                var mapper = mockMapper.CreateMapper();
+
+                var service = new BrandService(repo2, mapper);
+
+                var results = await service.BrowseAsync();
+                var firstResult = results.FirstOrDefault();
+
+                //Assert.InRange(result.BrandPackages.Count(),1,1);
+                Assert.Single(firstResult.BrandPackages);
             }
         }
     }
