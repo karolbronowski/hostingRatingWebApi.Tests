@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace hostingRatingWebApi.Tests.Services
 {
+    //Tests for BrandPackageService
     public class BrandPackageServiceTests
     {
         [Fact]

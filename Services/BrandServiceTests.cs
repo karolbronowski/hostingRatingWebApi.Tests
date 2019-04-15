@@ -14,6 +14,7 @@ using Xunit;
 
 namespace hostingRatingWebApi.Tests.Services
 {
+    //Tests for BrandService 
     public class BrandServiceTests
     {
         [Fact]
