@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28721.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostingRatingWebApi.Tests", "hostingRatingWebApi.Tests.csproj", "{682BE08C-ED23-427F-A557-58E3840E1A5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hostingRatingWebApi", "..\hostingRatingWebApi\hostingRatingWebApi.csproj", "{618E2CB3-673A-4520-84F1-FCCDEC032116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{682BE08C-ED23-427F-A557-58E3840E1A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682BE08C-ED23-427F-A557-58E3840E1A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682BE08C-ED23-427F-A557-58E3840E1A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{682BE08C-ED23-427F-A557-58E3840E1A5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618E2CB3-673A-4520-84F1-FCCDEC032116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618E2CB3-673A-4520-84F1-FCCDEC032116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618E2CB3-673A-4520-84F1-FCCDEC032116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618E2CB3-673A-4520-84F1-FCCDEC032116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96883984-56E4-4B4D-8A2A-7683A445FBAE}
+	EndGlobalSection
+EndGlobal
